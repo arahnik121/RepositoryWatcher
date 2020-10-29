@@ -53,7 +53,6 @@ public class DirectoryWatcher {
                 String fileName = event.context().toString();
                 if (event.kind().toString().equals("ENTRY_CREATE")) {
                     executorService.submit(new HandlerController(PATH.toString(), fileName));
-
                     System.out.println("Task submitted");
                 }
             }

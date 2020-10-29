@@ -12,7 +12,6 @@ public class Main {
         props.load(new FileInputStream("src/main/resources/prop"));
         final String path = props.getProperty("PATH");
 
-
         DirectoryWatcher dw = new DirectoryWatcher(path);
         dw.watch();
     }
