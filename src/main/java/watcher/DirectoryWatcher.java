@@ -48,8 +48,15 @@ public class DirectoryWatcher {
         System.out.println("Waiting for changes...");
         while ((key = getWatchService().take()) != null) {
             for (WatchEvent<?> event : key.pollEvents()) {
+
+                String kind = event.kind().toString();
+                if (kind.equals("OVERFLOW")) {
+                    break;
+                }
+
                 logger.log( "File " + event.context().toString() + " was affected with kind " + event.kind() + " with extension "
                         + sh.getExtensionByStringHandling(event.context().toString()) + "\n");
+
                 String fileName = event.context().toString();
                 if (event.kind().toString().equals("ENTRY_CREATE")) {
                     executorService.submit(new HandlerController(PATH.toString(), fileName));

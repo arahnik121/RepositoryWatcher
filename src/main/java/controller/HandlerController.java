@@ -26,6 +26,8 @@ public class HandlerController implements Runnable {
                 } else if (file.exists() && sh.getExtensionByStringHandling(file.getName()).equals(".xml")) {
                     handler = new XMLHandler();
                     handler.handle(file);
+                } else if (file.exists() && sh.getExtensionByStringHandling(file.getName()).equals(".DS_Store")) {
+                    return;
                 } else {
                     handler = new RemoveHandler();
                     handler.handle(file);
