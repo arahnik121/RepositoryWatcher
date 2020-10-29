@@ -13,11 +13,6 @@ public class JSONHandler implements Handler {
     public void handle(File f) {
         long m = System.currentTimeMillis();
         LogWriter logger = new LogWriter();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         double a = (double) (System.currentTimeMillis() - m);
         try {
             logger.log("Time spent to handle JSON file: " + a/1000 + " seconds\n" + "Number of lines in file "

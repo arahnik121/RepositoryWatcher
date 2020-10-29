@@ -12,8 +12,6 @@ public class Main {
         props.load(new FileInputStream("src/main/resources/prop"));
         final String path = props.getProperty("PATH");
 
-        Thread thread = new Thread(new HandlerController(path));
-        thread.start();
 
         DirectoryWatcher dw = new DirectoryWatcher(path);
         dw.watch();

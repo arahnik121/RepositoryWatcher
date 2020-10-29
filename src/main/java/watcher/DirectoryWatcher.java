@@ -6,6 +6,8 @@ import logger.LogWriter;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DirectoryWatcher {
     private WatchService watchService;
@@ -33,6 +35,8 @@ public class DirectoryWatcher {
         WatchKey key;
         LogWriter logger = new LogWriter();
         StringHandler sh = new StringHandler();
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+
         try {
             getPath().register(getWatchService(),
                     StandardWatchEventKinds.ENTRY_CREATE,
@@ -46,8 +50,15 @@ public class DirectoryWatcher {
             for (WatchEvent<?> event : key.pollEvents()) {
                 logger.log( "File " + event.context().toString() + " was affected with kind " + event.kind() + " with extension "
                         + sh.getExtensionByStringHandling(event.context().toString()) + "\n");
+                String fileName = event.context().toString();
+                if (event.kind().toString().equals("ENTRY_CREATE")) {
+                    executorService.submit(new HandlerController(PATH.toString(), fileName));
+
+                    System.out.println("Task submitted");
+                }
             }
             key.reset();
         }
+        executorService.shutdown();
     }
 }

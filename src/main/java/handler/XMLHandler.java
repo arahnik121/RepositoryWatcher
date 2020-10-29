@@ -12,11 +12,6 @@ public class XMLHandler implements Handler {
     public void handle(File f) {
         long m = System.currentTimeMillis();
         LogWriter logger = new LogWriter();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         double a = (double) (System.currentTimeMillis() - m);
 
         try {
